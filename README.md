@@ -47,6 +47,10 @@ Anonymize the website you accessed. (**Currently, this doesn't work actually...*
 Replaced "/jp/macbook-pro/" as "/path/to/somepage/"
 ```
 
+## AUTHOR
+
+Yoshiyuki Kurauchi ([GitHub](https://github.com/wmnsk/))
+
 ## LICENSE
 
 [MIT](http://)

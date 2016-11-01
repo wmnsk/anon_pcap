@@ -28,11 +28,21 @@ def read_as_bin(path):
 def bintohex(b):
     pcap_hex = binascii.hexlify(pcap_bin)
 
+def validate(vps):
+    for l in vps:
+        if len(l[0]) != len(l[1]):
+            print 'ERROR: Value to be replaced should be the same in length.'
+            print '%s\t : %d' % (l[0], len(l[0]))
+            print '%s\t : %d' % (l[1], len(l[1]))
+            quit(-1)
+        else:
+            pass
+
 src_pcap  = args.srcpcap
 dst_pcap  = open(args.dstpcap, 'w')
 val_pairs = convert_valargs(args.values)
 
-class PktCap(object):
+class Pcap():
     'Main class for PCAP to be handled.'
     def __init__(self, srcpath, dstpath):
         self.dst = dstpath
@@ -50,7 +60,8 @@ class PktCap(object):
         self.dst.write(self.pcap_mod_bin)
 
 def main():
-    p = PktCap(src_pcap, dst_pcap)
+    validate(val_pairs)
+    p = Pcap(src_pcap, dst_pcap)
     r = p.replace_value(val_pairs)
     p.hex_to_pcap(r)
 
