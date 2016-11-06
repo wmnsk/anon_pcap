@@ -3,13 +3,16 @@
 Mini python script to replace specified value in PCAP(or any binary) file.  
 Initially developed with intension of anonymizing sensitive information in PCAP file but this script, as a result, works on any binary.
 
-Currently IP address is not supported but would be implemented some day...
+Currently IP address is not supported but would be implemented some day...  
+For such lower layers, it's easier to use other tools available with good quality, such as dpkt :-P
 
 #### IMPORTANT NOTICE:
 
-* This is still experimental, sometimes results in failure due to the change in the length of the field.
+* This is still experimental, sometimes results in failure due to some unexpected changes. Please check by yourself(with Wireshark or some good decoder tools) if this script works as you expected or not every time you run, as there may be some unexpected changes in cases like;
+  * The same string at some other fields you don't expect, which may cause spoiling the packet format.
+  * Some protocols which have the "strict" format may be spoiled when you are ignorant of the specifications.
 
-* Please check by yourself if this script works right or not every time you run, as there may be the same string at some fields you don't expect, which may cause spoiling the packet format.
+* Any pull request will be welcome to improve this easy but stupid script.
 
 ## USAGE
 
@@ -31,7 +34,7 @@ optional arguments:
 
 ## EXAMPLE
 
-Anonymize MCC/MCC(Country/Operator) information on Diameter packets.  
+Anonymize MCC/MNC(Country/Operator) information in Diameter packets.  
 This is expected to work on IMSI(in User-Name AVP or others if any) and Host/Realm.
 
 ```shell-session
