@@ -22,13 +22,13 @@ parser.add_argument('-v', '--values', help='A pair of values before/after anonym
 args = parser.parse_args()
 
 src_pcap  = args.srcpcap
-dst_pcap  = open(args.dstpcap, 'w')
+dst_pcap  = args.dstpcap
 val_pairs = args.values
 
 class PcapData():
     'Main class for PCAP to be handled.'
     def __init__(self, srcpath, dstpath):
-        self.dst = dstpath
+        self.dstfile = open(dstpath, 'w')
         self.pcap_bin = self.file2bin(srcpath)
         self.pcap_hex = self.bin2hex(self.pcap_bin)
 
@@ -51,7 +51,7 @@ class PcapData():
         return self.pcap_mod_hex
 
     def write_pcap(self, hexdata):
-        self.dst.write(bytearray.fromhex(hexdata))
+        self.dstfile.write(bytearray.fromhex(hexdata))
 
 def main():
     validate(val_pairs)
