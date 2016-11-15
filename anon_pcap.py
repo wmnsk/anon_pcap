@@ -4,7 +4,7 @@
 import argparse
 import binascii
 
-def validate(v, a, l):
+def validate_args(v, a):
     '''Check the length of each argment in pairs. (Need better error handling...)'''
     if v is None and a is None:
         print 'ERROR: No replace argument specified. Quitting.'
@@ -29,9 +29,10 @@ def validate(v, a, l):
             else:
                 pass
 
-    if l is None:
+    '''
+    if l == 'anonymized.pcap':
         print 'INFO: No destination file specified. %s will be created here.' % l
-
+    '''
 
 parser = argparse.ArgumentParser(description='Mini python script to replace specified value in PCAP(or any binary) file.')
 parser.add_argument('-s', '--srcpcap', help='Path to the raw PCAP file to be anonymized.', required=True)
@@ -98,7 +99,7 @@ class PcapData():
         self.dstfile.write(bytearray.fromhex(hexdata))
 
 def main():
-    validate(str_pairs, hex_pairs, dst_pcap)
+    validate_args(str_pairs, hex_pairs)
     p = PcapData(src_pcap, dst_pcap)
     if str_pairs is not None:
         r = p.replace_strval(str_pairs)
