@@ -3,8 +3,6 @@
 Mini python script to replace specified value in PCAP(or any binary) file.  
 Initially developed with intension of anonymizing sensitive information in PCAP file but this script, as a result, works on any binary.
 
-For such lower layers, it's easier to use other tools available with good quality, such as dpkt :-P
-
 #### IMPORTANT NOTICE:
 
 * This is still experimental, sometimes results in failure due to some unexpected changes. Please check by yourself(with Wireshark or some good decoder tools) if this script works as you expected or not every time you run, as there may be some unexpected changes in cases like;
@@ -56,9 +54,11 @@ MAC/IP can only be replaced when specified as HEX string with "-x" keyword.
 # python anon_pcap.py -s path/to/src.pcap -d path/to/dst.pcap \
 -v 441481000001 441481009999 \ # Src GT(E.164)
 -v 126800000001 126800009999 \ # Dst GT(E.164)
--v 12345600000012 23455000000001 \ # IMSI(E.212)
--x 080042000001080042000002 080042ffffff080042999999 \ # Src/Dst MAC Addresses in hex
--x deadbeefbeafdead 6f6f6f6fdededede # Src/Dst IP Addresses in hex
+-v 23455000000001 23455000009999 \ # IMSI(E.212)
+-x 080042000001 080042ffffff \ # MAC Address in hex #1
+-x 080042000002 080042999999 \ # MAC Address in hex #2
+-x deadbeef 6f6f6f6f # IP Address in hex #1
+-x beafdead dededede # IP Address in hex #2
 
 ```
 
