@@ -4,16 +4,34 @@
 import argparse
 import binascii
 
-def validate(vps):
+def validate(v, a, l):
     '''Check the length of each argment in pairs. (Need better error handling...)'''
-    for l in vps:
-        if len(l[0]) != len(l[1]):
-            print 'ERROR: Value to be replaced should be the same in length.'
-            print '%s\t : %d' % (l[0], len(l[0]))
-            print '%s\t : %d' % (l[1], len(l[1]))
-            quit(-1)
-        else:
-            return True
+    if v is None and a is None:
+        print 'ERROR: No replace argument specified. Quitting.'
+        quit(-1)
+    if v is not None:
+        for x in v:
+            if len(x[0]) != len(x[1]):
+                print 'ERROR: Value to be replaced should be the same in length.'
+                print '%s\t : %d' % (x[0], len(x[0]))
+                print '%s\t : %d' % (x[1], len(x[1]))
+                quit(-1)
+            else:
+                pass
+
+    if a is not None:
+        for x in a:
+            if len(x[0]) != len(x[1]):
+                print 'ERROR: Value to be replaced should be the same in length.'
+                print '%s\t : %d' % (x[0], len(x[0]))
+                print '%s\t : %d' % (x[1], len(x[1]))
+                quit(-1)
+            else:
+                pass
+
+    if l is None:
+        print 'INFO: No destination file specified. %s will be created here.' % l
+
 
 parser = argparse.ArgumentParser(description='Mini python script to replace specified value in PCAP(or any binary) file.')
 parser.add_argument('-s', '--srcpcap', help='Path to the raw PCAP file to be anonymized.', required=True)
@@ -80,10 +98,12 @@ class PcapData():
         self.dstfile.write(bytearray.fromhex(hexdata))
 
 def main():
-    validate(str_pairs)
+    validate(str_pairs, hex_pairs, dst_pcap)
     p = PcapData(src_pcap, dst_pcap)
-    r = p.replace_strval(str_pairs)
-    r = p.replace_hexval(hex_pairs)
+    if str_pairs is not None:
+        r = p.replace_strval(str_pairs)
+    if hex_pairs is not None:
+        r = p.replace_hexval(hex_pairs)
     p.write_pcap(r)
 
 if __name__ == '__main__':
