@@ -1,6 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+'''
+anon_pcap.py - Mini python script to replace specified value in PCAP file.
+
+Copyright(C) 2016 Yoshiyuki Kurauchi
+License: MIT (https://github.com/wmnsk/anon_pcap/blob/master/MIT.md)
+Latest version is available on GitHub(https://github.com/wmnsk/anon_pcap).
+'''
+
 import argparse
 import binascii
 
@@ -28,11 +36,6 @@ def validate_args(v, a):
                 quit(-1)
             else:
                 pass
-
-    '''
-    if l == 'anonymized.pcap':
-        print 'INFO: No destination file specified. %s will be created here.' % l
-    '''
 
 parser = argparse.ArgumentParser(description='Mini python script to replace specified value in PCAP(or any binary) file.')
 parser.add_argument('-s', '--srcpcap', help='Path to the raw PCAP file to be anonymized.', required=True)
