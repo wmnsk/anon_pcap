@@ -80,4 +80,5 @@ Yoshiyuki Kurauchi ([GitHub](https://github.com/wmnsk/))
 
 ## LICENSE
 
-[MIT](https://github.com/wmnsk/anon_pcap/blob/master/MIT.md)
+[MIT](https://github.com/wmnsk/anon_pcap/blob/master/LICENSE)
+
