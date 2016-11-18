@@ -60,6 +60,7 @@ class PcapData():
         ''' open pcap file as binary. '''
         bindata = open(path, 'rb').read()
         return bindata
+        bindata.close()
 
     def bin2hex(self, bindata):
         ''' convert binary into hexadecimal. '''
@@ -100,6 +101,7 @@ class PcapData():
     def write_pcap(self, hexdata):
         ''' write modified data as binary(pcap) file. '''
         self.dstfile.write(bytearray.fromhex(hexdata))
+        self.dstfile.close()
 
 def main():
     validate_args(str_pairs, hex_pairs)
