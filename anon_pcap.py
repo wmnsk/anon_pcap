@@ -57,10 +57,10 @@ class PcapData():
         self.pcap_hex = self.bin2hex(self.pcap_bin)
 
     def file2bin(self, path):
-        ''' open pcap file as binary. '''
-        bindata = open(path, 'rb').read()
+        ''' read pcap file as binary. '''
+        with open(path, 'rb') as d:
+            bindata = d.read()
         return bindata
-        bindata.close()
 
     def bin2hex(self, bindata):
         ''' convert binary into hexadecimal. '''
