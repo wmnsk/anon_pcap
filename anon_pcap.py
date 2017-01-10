@@ -84,11 +84,11 @@ class PcapHandler(object):
             if self.str2hex(orgstr) not in self.pcap_hex:
                 self.pcap_hex = self.pcap_hex.replace(
                     self.swap_str(orgstr, 'f'),
-                    self.swap_str(modstr, modstr[-1])
+                    self.swap_str(modstr, 'f')
                     )
                 self.pcap_hex = self.pcap_hex.replace(
                     self.swap_str(orgstr, '0'),
-                    self.swap_str(modstr, modstr[-1])
+                    self.swap_str(modstr, '0')
                     )
                 print('Replaced "%s" as "%s"' % (orgstr, modstr))
             else:
