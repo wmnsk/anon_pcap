@@ -5,9 +5,10 @@
 anon_pcap.py - Mini python script to replace specified value in PCAP file.
 
 Copyright(C) 2016 Yoshiyuki Kurauchi
-License: MIT (https://github.com/wmnsk/anon_pcap/blob/master/MIT.md)
+License: MIT (https://github.com/wmnsk/anon_pcap/blob/master/LICENSE)
 Latest version is available on GitHub(https://github.com/wmnsk/anon_pcap).
 '''
+
 from __future__ import print_function
 from binascii import hexlify as hx
 

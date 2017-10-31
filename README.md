@@ -1,19 +1,21 @@
 # anon_pcap.py
 
 Mini python script to replace specified value in PCAP file.  
-Initially developed with intension of anonymizing sensitive information in PCAP file but this script, as a result, works on any binary.
+Initially developed to anonymize sensitive information in PCAP file but this script, as a result, works on any binary.
 
-#### IMPORTANT NOTICE:
+#### Important notice:
 
-* This stupid script sometimes results in failure due to some unexpected changes. Please check by yourself(with Wireshark or some good decoder tools) if this script works as you expected or not every time you run, as there may be some unexpected changes in cases like;
+* This stupid script sometimes results in failure due to some unexpected changes. Please check by yourself(with Wireshark or some proper decoder tools) if this script works as you expected, as there may be some unexpected changes in cases like;
+
   * The same string at some other fields you don't expect, which may cause spoiling the packet format.
-  * Some protocols which have the "strict" format may be spoiled when you are ignorant of the specifications.  
+
+  * Some protocols which have the "strict" format, like ASN.1-defined ones, may be spoiled when you are ignorant of the specifications.  
 
 * If the fields you want to rewrite is in the lower layer or famous enough to be decoded easily, it's better to use other nice tools such as [dpkt](https://github.com/kbandla/dpkt),  [tcprewrite](http://tcpreplay.synfin.net/wiki/tcprewrite) or [Scapy](https://github.com/secdev/scapy) if you'd like to send it immediately.
 
-* Any pull request will be welcome if there might be anyone fond of editing pcaps :-P
+* Any pull request will be welcome if there would be anyone fond of editing pcaps :-P
 
-## USAGE
+## Usage
 
 ```shell-session
 # python anon_pcap.py -h
@@ -36,9 +38,9 @@ optional arguments:
                         format.
 ```
 
-## EXAMPLE
+## Examples
 
-Anonymize MCC/MNC(Country/Operator) information in Diameter packets.  
+Anonymize [MCC/MNC(Country/Operator) information](https://github.com/wmnsk/mccmnc_scraper) in Diameter packets.  
 This is expected to work on IMSI(in User-Name AVP or others if any) and Host/Realm.
 
 ```shell-session
@@ -69,10 +71,10 @@ MAC/IP can only be replaced when specified in HEX string with "-x" keyword.
 
 ```
 
-## NOTES
+## Notes
 
 In some kind of "legacy" protocols, we sometimes need to be sure of its endianness. For instance, the IMSI(E.212 number) "440980123456789" in SS7/SIGTRAN PCAP is written as "44900821436587f9" in hexstream.  
-Currently, this script is tested on the following values in SIGTRAN packets and confirmed to work. Please let me know if you had the unexpected results.
+Currently, this script is tested on the following values in SIGTRAN packets and confirmed to work. Please create an issue if you had the unexpected results.
 
 | Fields | Human Readable | Actual Hex | Notes |
 | --- | --- | --- | --- |
@@ -81,10 +83,10 @@ Currently, this script is tested on the following values in SIGTRAN packets and 
 | Global Title | 81901234567 | 180921436507 | The last digit is filled with '0' when the length is odd |
 
 
-## AUTHOR
+## Author
 
-Yoshiyuki Kurauchi ([GitHub](https://github.com/wmnsk/))
+Yoshiyuki Kurauchi ([GitHub](https://github.com/wmnsk/) / [Twitter](https://twitter.com/wmnskdmms/))
 
-## LICENSE
+## License
 
 [MIT](https://github.com/wmnsk/anon_pcap/blob/master/LICENSE)
