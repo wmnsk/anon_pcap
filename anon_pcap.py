@@ -41,11 +41,9 @@ def validate_args(v, a):
                 pass
 
 
-
 class PcapHandler(object):
     '''Main class for PCAP to be handled.
     TODO: Split the methods out for better implementation.
-          e.g., read/write should be in another class.
     '''
     def __init__(self, srcpath, dstpath):
         self.dstfile = open(dstpath, 'w')
@@ -70,12 +68,11 @@ class PcapHandler(object):
 
     def swap_str(self, strdata, fill):
         ''' swap argument string by two characters.
-        (implementedfor the legacy protocols like SS7). 
+        (implemented for the legacy protocols like SS7). 
         '''
         if len(strdata) % 2 == 1:
             strdata = strdata + fill
-        swapped = ''.join(map(lambda x: x[::-1], [strdata[i: i+2] for i in range(0, len(strdata), 2)])) # python magic!
-        return swapped
+        return ''.join(map(lambda x: x[::-1], [strdata[i: i+2] for i in range(0, len(strdata), 2)])) # python magic!
 
     def replace_strval(self, strargs):
         ''' replace value with string-formatted argument(-v). '''
@@ -174,24 +171,20 @@ def main():
         )
     args = parser.parse_args()
 
-    src_pcap = args.srcpcap
-    dst_pcap = args.dstpcap
-    str_pairs = args.strvals
-    hex_pairs = args.hexvals
-
     validate_args(str_pairs, hex_pairs)
 
-    p = PcapHandler(src_pcap, dst_pcap)
+    p = PcapHandler(args.srcpcap, args.dstpcap)
     if str_pairs is not None:
-        r = p.replace_strval(str_pairs)
+        r = p.replace_strval(args.strvals)
     if hex_pairs is not None:
-        r = p.replace_hexval(hex_pairs)
+        r = p.replace_hexval(args.hexvals)
     p.write_pcap(r)
 
 
 if __name__ == '__main__':
     from sys import argv
     if argv[1] == 'test':
+    	# TODO: Add more tests.
         test_diameter()
     else:
         main()
