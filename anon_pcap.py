@@ -46,7 +46,7 @@ class PcapHandler(object):
     TODO: Split the methods out for better implementation.
     '''
     def __init__(self, srcpath, dstpath):
-        self.dstfile = open(dstpath, 'w')
+        self.dstfile = open(dstpath, 'wb')
         self.pcap_bin = self.file2bin(srcpath)
         self.pcap_hex = self.bin2hex(self.pcap_bin)
 
@@ -171,12 +171,12 @@ def main():
         )
     args = parser.parse_args()
 
-    validate_args(str_pairs, hex_pairs)
+    validate_args(args.strvals, args.hexvals)
 
     p = PcapHandler(args.srcpcap, args.dstpcap)
-    if str_pairs is not None:
+    if args.strvals is not None:
         r = p.replace_strval(args.strvals)
-    if hex_pairs is not None:
+    if args.hexvals is not None:
         r = p.replace_hexval(args.hexvals)
     p.write_pcap(r)
 
