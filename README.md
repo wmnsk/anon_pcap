@@ -1,19 +1,18 @@
 # anon_pcap.py
 
-Mini python script to replace specified value in PCAP file.  
-Initially developed to anonymize sensitive information in PCAP file but this script, as a result, works on any binary.
+Mini python script to replace specified value in a PCAP file.  
+Initially developed to anonymize sensitive information in PCAP file, but this script should work on any binary.
 
-#### Important notice:
+#### Disclaimer
 
-* This stupid script sometimes results in failure due to some unexpected changes. Please check by yourself(with Wireshark or some proper decoder tools) if this script works as you expected, as there may be some unexpected changes in cases like;
+* Not working with Python3. Try installing Python2 or patching it by yourself (or contribute to this project!).
+* Beware of the unexpected changes made by this script. It is recommended to check the output PCAP file carefully.
 
-  * The same string at some other fields you don't expect, which may cause spoiling the packet format.
+## Features
 
-  * Some protocols which have the "strict" format, like ASN.1-defined ones, may be spoiled when you are ignorant of the specifications.  
-
-* If the fields you want to rewrite is in the lower layer or famous enough to be decoded easily, it's better to use other nice tools such as [dpkt](https://github.com/kbandla/dpkt),  [tcprewrite](http://tcpreplay.synfin.net/wiki/tcprewrite) or [Scapy](https://github.com/secdev/scapy) if you'd like to send it immediately.
-
-* Any pull request will be welcome if there would be anyone fond of editing pcaps :-P
+* Replace specified value in PCAP file.
+  * BCD-encoded values (e.g. IMSI, MSISDN, Global Title) can be replaced in string format (as copied as value on Wireshark).
+  * Any other field can be replaced in hex format (as copied as hexstream on Wireshark).
 
 ## Usage
 
@@ -22,7 +21,7 @@ Initially developed to anonymize sensitive information in PCAP file but this scr
 usage: anon_pcap.py [-h] -s SRCPCAP [-d DSTPCAP] [-v STRVAL STRVAL]
                     [-x HEXVAL HEXVAL]
 
-Mini python script to replace specified value in PCAP(or any binary) file.
+Mini python script to replace specified value in PCAP (or any binary) file.
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -40,8 +39,8 @@ optional arguments:
 
 ## Examples
 
-Anonymize [MCC/MNC(Country/Operator) information](https://github.com/wmnsk/mccmnc_scraper) in Diameter packets.  
-This is expected to work on IMSI(in User-Name AVP or others if any) and Host/Realm.
+Replace [MCC/MNC information](https://github.com/wmnsk/mccmnc_scraper) in Diameter packets.  
+This example is expected to work on IMSI (in User-Name AVP or others if any) and Host/Realm.
 
 ```shell-session
 # python anon_pcap.py -s path/to/src.pcap -d path/to/dst.pcap \
@@ -49,17 +48,16 @@ This is expected to work on IMSI(in User-Name AVP or others if any) and Host/Rea
     -v epc.mnc000.mcc440.3gppnetwork.org epc.mnc999.mcc999.3gppnetwork.org
 ```
 
-Anonymize source/destination Global Titles and IMSI in SS7 packets.
+Replace source/destination Global Titles and IMSI in SS7/SIGTRAN/etc.
 
 ```shell-session
 # python anon_pcap.py -s path/to/src.pcap -d path/to/dst.pcap \
     -v 441481000001 441481009999 \ # Src GT or MSISDN(E.164)
     -v 126800000001 126800009999 \ # Dst GT or MSISDN(E.164)
     -v 23455000000001 23455000009999  # IMSI(E.212)
-
 ```
 
-Simply replace MAC/IP addresses in any packets.  
+Replace MAC/IP addresses in any packets.  
 MAC/IP can only be replaced when specified in HEX string with "-x" keyword.
 
 ```shell-session
@@ -73,7 +71,7 @@ MAC/IP can only be replaced when specified in HEX string with "-x" keyword.
 
 ## Notes
 
-In some kind of "legacy" protocols, we sometimes need to be sure of its endianness. For instance, the IMSI(E.212 number) "440980123456789" in SS7/SIGTRAN PCAP is written as "44900821436587f9" in hexstream.  
+In some kind of "legacy" protocols, we sometimes need to be sure of its endianness. For instance, the IMSI (E.212 number) "440980123456789" in SS7/SIGTRAN PCAP is written as "44900821436587f9" in hexstream.  
 Currently, this script is tested on the following values in SIGTRAN packets and confirmed to work. Please create an issue if you had the unexpected results.
 
 | Fields | Human Readable | Actual Hex | Notes |
